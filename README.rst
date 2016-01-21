@@ -1,3 +1,6 @@
+.. image:: https://secure.travis-ci.org/sjdines/mezzanine-fluent-pages.png?branch=master
+   :target: http://travis-ci.org/sjdines/mezzanine-fluent-pages
+
 Mezzanine Fluent Pages
 ======================
 
