@@ -7,19 +7,18 @@ Mezzanine Fluent Pages
 Introduction
 ------------
 
-```Mezzanine`` <https://github.com/stephenmcd/mezzanine>`__ is a content
+`Mezzanine <https://github.com/stephenmcd/mezzanine>`__ is a content
 management platform that provides a single yet highly extensible
 architecture. With in the project there are different types of pages
 geared towards achieving a task.
 
-`'Fluent
-Contents' <https://github.com/edoburu/django-fluent-contents>`__ offers
+`Fluent Contents <https://github.com/edoburu/django-fluent-contents>`__ offers
 a widget engine to display various content on a page built in
 ``Django``.
 
 This project bridges the two providing page types for
-```Mezzanine`` <https://github.com/stephenmcd/mezzanine>`__ that utilize
-```Fluent Contents`` <https://github.com/edoburu/django-fluent-contents>`__
+`Mezzanine <https://github.com/stephenmcd/mezzanine>`__ that utilize
+`Fluent Contents <https://github.com/edoburu/django-fluent-contents>`__
 for the page data.
 
 There are two (2) different implementations provided within this project
@@ -29,11 +28,11 @@ There are two (2) different implementations provided within this project
 -  ``mezzanine_layout_page``
 
 These page implementations borrow heavily from
-```Fluent Pages`` <https://github.com/edoburu/django-fluent-pages>`__
+`Fluent Pages <https://github.com/edoburu/django-fluent-pages>`__
 but have been kept purposely separate due to the overheads of installing
-```Fluent Pages`` <https://github.com/edoburu/django-fluent-pages>`__.
+`Fluent Pages <https://github.com/edoburu/django-fluent-pages>`__.
 The ideal would be to move this common code into the
-```Fluent Utils`` <https://github.com/edoburu/django-fluent-utils>`__
+`Fluent Utils <https://github.com/edoburu/django-fluent-utils>`__
 package but that is not currently in the purview of this project.
 
 Page types
@@ -55,7 +54,7 @@ minimal and if you want a more tailored solution you are better off
 copying the app into your project and making relevant modifications.
 
 Refer to the
-```Fluent Contents`` <https://github.com/edoburu/django-fluent-contents>`__
+`Fluent Contents <https://github.com/edoburu/django-fluent-contents>`__
 app in regards to creating content plugins and limiting plugin
 availability.
 
@@ -69,7 +68,7 @@ customisation of the regions needed and the content plugins available to
 them.
 
 Refer to the
-```Fluent Contents`` <https://github.com/edoburu/django-fluent-contents>`__
+`Fluent Contents <https://github.com/edoburu/django-fluent-contents>`__
 app in regards to creating content plugins and limiting plugin
 availability.
 
