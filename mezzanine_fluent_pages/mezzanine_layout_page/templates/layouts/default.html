@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% load placeholder_tags %}
+
+{% block main %}
+	{% page_placeholder page.get_content_model "main" role="m" %}
+{% endblock %}

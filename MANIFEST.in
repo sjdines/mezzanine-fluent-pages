@@ -1,0 +1,5 @@
+include *.md tox.ini .travis.yml .coveragerc
+
+recursive-include mezzanine_fluent_pages *.html
+recursive-include mezzanine_fluent_pages/tests/templates *.html
+recursive-include mezzanine_fluent_pages/tests/templates *.py

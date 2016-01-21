@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% load fluent_contents_tags %}
+
+{% block main %}
+	{% render_placeholder page.get_content_model.content %}
+{% endblock %}

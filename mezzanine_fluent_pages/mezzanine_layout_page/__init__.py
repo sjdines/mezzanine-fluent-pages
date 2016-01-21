@@ -1,0 +1,1 @@
+default_app_config = 'mezzanine_fluent_pages.mezzanine_layout_page.apps.FluentMezzanineLayoutPageConfig'
