@@ -24,6 +24,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'django_wysiwyg',
     'fluent_contents',
     'mezzanine.boot',
     'mezzanine.conf',
@@ -35,12 +36,10 @@ INSTALLED_APPS = (
     'mezzanine_fluent_pages.tests',
 )
 
-MEZZANINE_PAGES_TEMPLATE_DIR = os.path.join(
-    BASE_DIR.replace('/tests', ''), 'mezzanine_layout_page', 'templates'
-)
-
 TEMPLATE_DIRS = [
-    BASE_DIR.replace('/tests', ''), 'mezzanine_layout_page', 'templates'
+    os.path.join(
+        BASE_DIR.replace('/tests', ''), 'mezzanine_layout_page', 'templates'
+    ),
 ]
 
 # List of middleware classes to use. Order is important; in the request phase,

@@ -22,6 +22,11 @@ class TemplateFilePathFieldForm(forms.FilePathField):
         :param kwargs: Additional keyword arguments.
         :return: None
         """
+        # If path is `None` it will cause a `TypeError` when it tries to coerce it to unicode
+        # in `Django<1.8` when it calls `listdir(top)`.
+        if kwargs['path'] is None:
+            kwargs['path'] = ''
+
         super(TemplateFilePathFieldForm, self).__init__(*args, **kwargs)
         # Make choices relative if requested.
         if appsettings.MEZZANINE_PAGES_RELATIVE_TEMPLATE_DIR:

@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib import admin as django_admin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest
@@ -12,8 +11,12 @@ from mezzanine_fluent_pages.mezzanine_layout_page.admin import FluentContentsLay
 
 from . import appsettings, admin, fields, forms, models, widgets
 
-
-User = get_user_model()
+# Fallback support for `Django1.4`.
+try:
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+except ImportError:
+    from django.contrib.auth.models import User
 
 
 class Admin(TestCase):
@@ -137,7 +140,7 @@ class AppSettings(TestCase):
             with self.assertRaises(ImproperlyConfigured) as cm:
                 six.moves.reload_module(appsettings)
             self.assertEqual(
-                str(cm.exception),
+                six.text_type(cm.exception),
                 'The setting `MEZZANINE_PAGES_TEMPLATE_DIR` or `TEMPLATE_DIRS[0]` need to be '
                 'defined!'
             )
@@ -146,7 +149,7 @@ class AppSettings(TestCase):
             with self.assertRaises(ImproperlyConfigured) as cm:
                 six.moves.reload_module(appsettings)
             self.assertEqual(
-                str(cm.exception),
+                six.text_type(cm.exception),
                 'The setting `MEZZANINE_PAGES_TEMPLATE_DIR` needs to be an absolute path!'
             )
 
@@ -154,22 +157,22 @@ class AppSettings(TestCase):
             with self.assertRaises(ImproperlyConfigured) as cm:
                 six.moves.reload_module(appsettings)
             self.assertEqual(
-                str(cm.exception),
+                six.text_type(cm.exception),
                 'The path `/test/` in the setting `MEZZANINE_PAGES_TEMPLATE_DIR` does not exist!'
             )
 
         with self.settings(TEMPLATE_DIRS=('./test/', )):
-            mezzanine_pages_template_dir = settings.MEZZANINE_PAGES_TEMPLATE_DIR
-            del settings.MEZZANINE_PAGES_TEMPLATE_DIR
+            # mezzanine_pages_template_dir = settings.MEZZANINE_PAGES_TEMPLATE_DIR
+            # del settings.MEZZANINE_PAGES_TEMPLATE_DIR
 
             with self.assertRaises(ImproperlyConfigured) as cm:
                 six.moves.reload_module(appsettings)
             self.assertEqual(
-                str(cm.exception),
+                six.text_type(cm.exception),
                 'The setting `TEMPLATE_DIRS[0]` needs to be an absolute path!'
             )
 
-            settings.MEZZANINE_PAGES_TEMPLATE_DIR = mezzanine_pages_template_dir
+            # settings.MEZZANINE_PAGES_TEMPLATE_DIR = mezzanine_pages_template_dir
 
         six.moves.reload_module(appsettings)
 
@@ -186,18 +189,22 @@ class Fields(TestCase):
         self.assertIsInstance(self.field.formfield(), forms.TemplateFilePathFieldForm)
 
     def test_templatefilepathfield_deconstruct(self):
-        self.assertEqual(
-            self.field.deconstruct(),
-            (
-                None,
-                u'mezzanine_fluent_pages.mezzanine_layout_page.fields.TemplateFilePathField',
-                [],
-                {
-                    u'recursive': True,
-                    u'match': '.*\\.html$'
-                }
+        if hasattr(super(fields.TemplateFilePathField, self.field), 'deconstruct'):
+            self.assertEqual(
+                self.field.deconstruct(),
+                (
+                    None,
+                    u'mezzanine_fluent_pages.mezzanine_layout_page.fields.TemplateFilePathField',
+                    [],
+                    {
+                        u'recursive': True,
+                        u'match': '.*\\.html$'
+                    }
+                )
             )
-        )
+        else:
+            with self.assertRaises(AttributeError):
+                self.field.deconstruct()
 
 
 class Forms(TestCase):
@@ -244,6 +251,12 @@ class Forms(TestCase):
                 )
             ]
         )
+
+        form = forms.TemplateFilePathFieldForm(
+            path=None,
+            recursive=True
+        )
+        self.assertEqual(form.path, '')
 
     def test_templatefilepathfieldform_prepare_value(self):
         appsettings.MEZZANINE_PAGES_RELATIVE_TEMPLATE_DIR = False
@@ -309,7 +322,11 @@ class Models(TestCase):
             title='title',
             template_path=template_path
         )
-        self.assertEqual(layout.get_template().template.name, template_path)
+        template = layout.get_template()
+        if hasattr(template, 'template'):
+            template = template.template
+
+        self.assertEqual(template.name, template_path)
 
     def test_str(self):
         # Test the string representations for models.
@@ -322,16 +339,15 @@ class Widgets(TestCase):
         ls = widgets.LayoutSelector()
 
         # Test to see that the value gets set as the `data-original-value`.
-        self.assertEqual(
-            ls.render(
-                'name',
-                'value',
-                {
-                    'data-original-value': 'fake value'
-                },
-            ),
-            '<select data-original-value="value" name="name">\n</select>'
+        rendered_string = ls.render(
+            'name',
+            'value',
+            {
+                'data-original-value': 'fake value'
+            },
         )
+
+        self.assertIn('data-original-value="value"', rendered_string)
 
         # Test to see the code operates without `attrs` specified.
         self.assertEqual(

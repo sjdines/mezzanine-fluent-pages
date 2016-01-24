@@ -38,7 +38,11 @@ class TemplateFilePathField(models.FilePathField):
 
     def deconstruct(self):
         """
-        Deconstruction of field for migration support.
+        Deconstruction of field for `Django>=1.7` migration support.
+
+        If this method is called with`Django<1.7` an `AttributeError`
+        exception will be raised as the super field does not have
+        this method.
 
         :return: Tuple of name, path, arguments and keyword arguments.
         """

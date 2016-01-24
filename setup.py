@@ -26,6 +26,7 @@ setuptools.setup(
         'test': [
             'tox',
             'django-dynamic-fixture',
+            'ipdb',
         ]
     },
 )
