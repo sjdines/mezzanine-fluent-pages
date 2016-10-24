@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib import admin
 from fluent_contents.admin import PlaceholderEditorAdmin
 from fluent_contents.analyzer import get_template_placeholder_data
@@ -85,14 +85,13 @@ class FluentContentsLayoutPageAdmin(PlaceholderEditorAdmin, PageAdmin):
         :return: List of URL patterns.
         """
         urls = super(FluentContentsLayoutPageAdmin, self).get_urls()
-        my_urls = patterns(
-            '',
+        my_urls = [
             url(
                 r'^get_layout/(?P<id>\d+)/$',
                 self.admin_site.admin_view(self.get_layout_view),
                 name='get_layout',
             )
-        )
+        ]
         return my_urls + urls
 
     def get_layout_view(self, request, id):
