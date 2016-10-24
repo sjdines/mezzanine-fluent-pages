@@ -27,6 +27,9 @@ setuptools.setup(
             'tox',
             'django-dynamic-fixture',
             'ipdb',
-        ]
+        ],
+        'html5libpin': [
+            'html5lib<0.9999999',
+        ],
     },
 )

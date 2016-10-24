@@ -102,6 +102,13 @@ To install ``mezzanine_fluent_pages`` run:
 
     pip install -e git+ssh://git@github.com/sjdines/mezzanine-fluent-pages#egg=mezzanine-fluent-pages
 
+Please note that with Django versions 1.8 and 1.9 require specific versions of `html5lib`.
+Installation can be done with the following:
+
+::
+
+    pip install -e git+ssh://git@github.com/sjdines/mezzanine-fluent-pages#egg=mezzanine-fluent-pages[html5libpin]
+
 Then add the page type(s) you wish to ``INSTALLED_APPS``:
 
 ::
