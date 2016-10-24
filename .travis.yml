@@ -7,18 +7,12 @@ script:
   - tox
 
 env:
-  - TOXENV=django14-py27
-  - TOXENV=django15-py27
-  - TOXENV=django15-py32
-  - TOXENV=django15-py33
-  - TOXENV=django16-py27
-  - TOXENV=django16-py32
-  - TOXENV=django16-py33
-  - TOXENV=django17-py27
-  - TOXENV=django17-py32
-  - TOXENV=django17-py33
   - TOXENV=django18-py27
   - TOXENV=django18-py33
   - TOXENV=django18-py34
   - TOXENV=django19-py27
   - TOXENV=django19-py34
+  - TOXENV=django19-py35
+  - TOXENV=django110-py27
+  - TOXENV=django110-py34
+  - TOXENV=django110-py35
